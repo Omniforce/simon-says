@@ -49,10 +49,10 @@ function Game() {
 	this.endGame = function() {
 		$('#score').hide();
 		$('#gameOver').show();
-		// setTimeout(function() {
-		// 	// $('#gameOver').hide();
-		// 	// $('#start').show();
-		// }, 3000);
+		setTimeout(function() {
+			$('#gameOver').hide();
+			$('#start').show();
+		}, 3000);
 	}
 
 	this.randomTile = function() {
