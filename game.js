@@ -10,7 +10,7 @@ function Game() {
 	this.sequence = [];
 	this.copy = [];
 	this.score = 0;
-	this.tiles = [$('#green'), $('#red'), $('yellow'), $('blue')];
+	this.tiles = [$('#green'), $('#red'), $('#yellow'), $('#blue')];
 
 	// ------------------- Game Logic ------------------
 
@@ -69,7 +69,6 @@ function Game() {
 				$(this).addClass('active');
 			}).on('touchend', '.tile', function(e) {
 				$(this).removeClass('active');
-				console.log(e);
 				thisGame.userClick(e);
 			});
 		} else {
@@ -81,10 +80,43 @@ function Game() {
 				$(this).removeClass('active');
 			});
 		}
+
+		$(window).on('keydown', function() {
+			if(event.keyCode === 37 || event.keyCode === 65) { // Yellow (Left and A)
+				thisGame.tiles[2].addClass('active');
+			} else if(event.keyCode === 38 || event.keyCode === 87) { // Green (Up and W)
+				thisGame.tiles[0].addClass('active');
+			} else if(event.keyCode === 39 || event.keyCode === 68) { // Red (Right and D)
+				thisGame.tiles[1].addClass('active');
+			} else if(event.keyCode === 40 || event.keyCode === 83) { // Blue (Down and S)
+				thisGame.tiles[3].addClass('active');
+			}
+		});
+		$(window).on('keyup', function() {
+			var sudoEvent = {};
+
+			if(event.keyCode === 37 || event.keyCode === 65) { // Yellow (Left and A)
+				thisGame.tiles[2].removeClass('active');
+				sudoEvent.target = thisGame.tiles[2];
+			} else if(event.keyCode === 38 || event.keyCode === 87) { // Green (Up and W)
+				thisGame.tiles[0].removeClass('active');
+				sudoEvent.target = thisGame.tiles[0];
+			} else if(event.keyCode === 39 || event.keyCode === 68) { // Red (Right and D)
+				thisGame.tiles[1].removeClass('active');
+				sudoEvent.target = thisGame.tiles[1];
+			} else if(event.keyCode === 40 || event.keyCode === 83) { // Blue (Down and S)
+				thisGame.tiles[3].removeClass('active');
+				sudoEvent.target = thisGame.tiles[3];
+			} else {
+				return;
+			}
+			thisGame.userClick(sudoEvent);
+		});
 	}
 
 	this.denyUserInput = function() {
 		$('#simon').off('click mousedown mouseup touchstart touchend', '.tile');
+		$(window).off('keydown keyup');
 	}
 
 	this.userClick = function(e) {
