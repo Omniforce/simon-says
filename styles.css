@@ -80,3 +80,7 @@ body {
 	background-color: #00B7B7;
 	border-radius: 0 0 100% 0;
 }
+
+#info {
+	font-family: 'Audiowide';
+}
